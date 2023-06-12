@@ -1,62 +1,60 @@
 <template>
   <div>
+    <!-- 시작화면 -->
     <div v-if="showTitle" class="quiz-start">
-    <h2>10문제의 퀴즈를 풀어보세요!</h2>
-    <button @click="start">퀴즈시작</button>
+      <h2>10문제의 퀴즈를 풀어보세요!</h2>
+      <button @click="start">퀴즈시작</button>
     </div>
 
-    
+    <!-- 퀴즈 화면 -->
+    <div v-if="showQuiz && !showTitle">
+      <div class="quiz-header">
+        <span class="quiz-progress">{{ currentQuestionIndex + 1 }} / {{ questions.length }}</span>
+        <h1 v-if="currentQuestion">{{ currentQuestion.question }}</h1>
+      </div>
+      <ul class="quiz-answers">
+        <li
+          v-for="(answer, index) in currentQuestion.answers"
+          :key="index"
+          @click="checkAnswer(index)"
+          :class="{ 'selected': isAnswerSelected(index) }"
+        >
+          {{ answer }}
+        </li>
+      </ul>
+    </div>
+
+    <!-- 결과 화면 -->
     <div v-if="showResult" class="quiz-result">
-    <h2>결과 : {{ questions.length }}점 만점에 {{ correctAnswers }}점!</h2>
-    <button @click="restart">퀴즈 재시작</button>
-    <p v-if= "showQuiz">틀린 문제를 선택하고 오답풀이를 시작해보세요. 오답풀이까지 {{ incorrectAnswers.length }} 문제 남았습니다</p>
-    </div>
-
-    <div v-if="showQuiz && !showTitle" class="quiz-header">
-      <span class="quiz-progress">{{ currentQuestionIndex + 1 }} / {{ questions.length }}</span>
-      <h1 v-if="currentQuestion">{{ currentQuestion.question }}</h1>
-    </div>
-    
-    <ul v-if="(currentQuestion && showQuiz && !showTitle)" class="quiz-answers">
-      <li
-        v-for="(answer, index) in currentQuestion.answers"
-        :key="index"
-        @click="checkAnswer(index)"
-        :class="{ 'selected': isAnswerSelected(index) }"
-      >
-        {{ answer }}
-      </li>
-    </ul>
-
-    <div v-if="showResult" class="quiz-result">
-        <div v-if="incorrectAnswers.length > 0">
+      <h2>결과 : {{ questions.length }}점 만점에 {{ correctAnswers }}점!</h2>
+      <div v-if="incorrectAnswers.length > 0">
         <h3>틀린문제:</h3>
-            <table>
-                <thead>
-                <tr>
-                    <th>문제번호</th>
-                    <th>문제</th>
-                    <th>정답</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="(index, i) in incorrectAnswers" :key="index">
-                    <td>
-                        <button @click="currentQuestionIndex = index">{{ index + 1 }}</button>
-                    </td>
-                    <td>
-                        {{ questions[index].question }}
-                    </td>
-                    <td>
-                        <p class="spoiler">{{ questions[index].correct + 1}}</p>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>문제번호</th>
+              <th>문제</th>
+              <th>정답</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(index, i) in incorrectAnswers" :key="index">
+              <td>
+                <button @click="currentQuestionIndex = index">{{ index + 1 }}</button>
+              </td>
+              <td>
+                {{ questions[index].question }}
+              </td>
+              <td>
+                <p class="spoiler">{{ questions[index].correct + 1 }}</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <button @click="restart">퀴즈 재시작</button>
+      <p v-if="showQuiz">틀린 문제를 선택하고 오답풀이를 시작해보세요. 오답풀이까지 {{ incorrectAnswers.length }} 문제 남았습니다</p>
     </div>
-
-
   </div>
 </template>
 
