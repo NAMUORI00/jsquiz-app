@@ -2,14 +2,16 @@
   <div>
     <div v-if="showResult" class="quiz-result">
     <h2>결과 : {{ questions.length }}점 만점에 {{ correctAnswers }}점!</h2>
-    <button @click="restart">다시풀기</button>
+    <button @click="restart">퀴즈 재시작</button>
+    <p v-if= "showQuiz">틀린 문제를 선택하고 오답풀이를 시작해보세요. 오답풀이까지 {{ incorrectAnswers.length }} 문제 남았습니다</p>
     </div>
 
-    <div class="quiz-header">
+    <div v-if="showQuiz" class="quiz-header">
       <span class="quiz-progress">{{ currentQuestionIndex + 1 }} / {{ questions.length }}</span>
       <h1 v-if="currentQuestion">{{ currentQuestion.question }}</h1>
     </div>
-    <ul v-if="currentQuestion" class="quiz-answers">
+    
+    <ul v-if="(currentQuestion && showQuiz)" class="quiz-answers">
       <li
         v-for="(answer, index) in currentQuestion.answers"
         :key="index"
@@ -97,7 +99,6 @@
 .spoiler:hover {
     color: #fff;
 }
-
 </style>
 
 
@@ -113,6 +114,7 @@ export default {
             correctAnswers: 0,
             incorrectAnswers: [],
             showResult: false,
+            showQuiz: true,
             selectedAnswerIndex: null,
         };
     },
@@ -135,9 +137,22 @@ export default {
         if (index === this.currentQuestion.correct) {
             if(!this.showResult){
                 this.correctAnswers++;
+            } else{
+                alert("정답입니다");
+                const index = this.incorrectAnswers.indexOf(this.currentQuestionIndex);
+                if (index !== -1) {
+                    this.incorrectAnswers.splice(index, 1);
+                    if (this.incorrectAnswers.length > 0) {
+                        this.currentQuestionIndex = this.incorrectAnswers[0];
+                    } else{
+                        alert("오답풀이가 끝났습니다");
+                        this.showQuiz = false;
+                    }
+                }
             }
         } else if (!this.incorrectAnswers.includes(this.currentQuestionIndex)) {
             this.incorrectAnswers.push(this.currentQuestionIndex);
+            
         }
         if (this.currentQuestionIndex < this.questions.length - 1) {
             await this.$nextTick();
@@ -147,6 +162,10 @@ export default {
             this.selectedAnswerIndex = null;
         } else {
             await this.$nextTick();
+            if(this.showResult){
+                alert("오답입니다 다시한번 풀이해보세요");
+            }
+            this.currentQuestionIndex = this.incorrectAnswers[0];
             this.showResult = true;
         }
     },
@@ -157,6 +176,7 @@ export default {
         this.currentQuestionIndex = 0;
         this.correctAnswers = 0;
         this.showResult = false;
+        this.showQuiz = true;
         this.selectedAnswerIndex = null;
         this.incorrectAnswers =[];
     },
