@@ -73,6 +73,17 @@ npm run dev
 
 
 
+#### 프로젝트 함수 설명(quiz.vue - methods)
+
+- `shuffle(array)`: 주어진 배열을 무작위로 섞어서 반환하는 함수
+- `getQuestions()`: 서버에서 문제 데이터를 가져와서 배열을 무작위로 섞은 후 `this.questions` 변수에 저장하는 비동기 함수
+- `checkAnswer(index)`: 사용자가 선택한 답안(`index`)을 확인하고, 맞은 경우 `this.correctAnswers` 변수를 증가시키거나, 틀린 경우 `this.incorrectAnswers` 배열에 현재 문제의 인덱스를 추가하는 함수. 또한, `this.showResult` 변수가 `true` 인 경우 선택한 답안이 정답인지 여부를 알리는 알림을 띄워주고, 오답풀이 모드인 경우 현재 문제의 인덱스를 `this.incorrectAnswers` 배열에서 제거하고, 남은 오답풀이 문제가 없다면 `this.showQuiz` 변수를 `false`로 설정하여 퀴즈를 종료한다.
+- `isAnswerSelected(index)`: 사용자가 선택한 답안 인덱스(`index`)가 현재 선택된 답안인지 여부를 반환하는 함수
+- `restart()`: 퀴즈를 다시 시작하기 위해 초기화하는 함수. `this.currentQuestionIndex`, `this.correctAnswers`, `this.showResult`, `this.showQuiz`, `this.selectedAnswerIndex`, `this.incorrectAnswers`, `this.showTitle` 변수를 초기화한다.
+- `start()`: `restart()` 함수와 비슷하지만, `this.showTitle` 변수를 `false`로 설정하여 시작 화면을 숨기고 퀴즈를 시작한다.
+
+
+
 ### 프로젝트 동작 이미지
 
 ![project](https://github.com/NAMUORI00/jsquiz-app/blob/main/project.gif)
