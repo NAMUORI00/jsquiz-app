@@ -18,11 +18,11 @@
 ├─vite.config.js
 ├─public
 └─src
-	├─App.vue
-	├─Quiz.vue
-	├─main.js
-    ├─assets
-    └─components
+  ├─App.vue
+  ├─Quiz.vue
+  ├─main.js
+  ├─assets
+  └─components
 ```
 
 - 본앱의 모든 중요코드는 Quiz.vue 를 참조하세요
@@ -48,6 +48,7 @@
 - question : 문제 지문
 - answers : 리스트 형식의 문제에 대한 답변 4지 선다를 기준으로 작성되어 있음
 - correct : 리스트의 몇번째 요소가 정답인지를 나타내는 정수값
+- 코드에 적힌 문제에 대한 내용은 Chat-gpt 3.5로 자동생성하였으며, 실제 내용과 무관할 수 있음
 
 
 
@@ -69,3 +70,9 @@ npm run dev
 ```
 
 - `npm run` 을 사용해도 실행이 되겠지만, 코드와 완전히 똑같은 환경으로 실행을 원하면 상단의 명령어를 이용하는것이 좋습니다.
+
+
+
+### 프로젝트 동작 이미지
+
+![project](https://github.com/NAMUORI00/jsquiz-app/blob/main/project.gif)
