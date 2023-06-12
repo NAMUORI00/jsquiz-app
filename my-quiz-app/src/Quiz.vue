@@ -6,6 +6,12 @@
       <button @click="start">퀴즈시작</button>
     </div>
 
+    <!-- 오답풀이 -->
+    <div v-if="showResult" class="quiz-result"> 
+      <button @click="restart">퀴즈 재시작</button>
+      <p v-if="showQuiz">틀린 문제를 선택하고 오답풀이를 시작해보세요. 오답풀이까지 {{ incorrectAnswers.length }} 문제 남았습니다</p>
+    </div>
+
     <!-- 퀴즈 화면 -->
     <div v-if="showQuiz && !showTitle">
       <div class="quiz-header">
@@ -46,67 +52,107 @@
                 {{ questions[index].question }}
               </td>
               <td>
-                <p class="spoiler">{{ questions[index].correct + 1 }}</p>
+                <p class="spoiler">선택지 {{ questions[index].correct + 1 }}번 {{ questions[index].answers[questions[index].correct]}}</p>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-      <button @click="restart">퀴즈 재시작</button>
-      <p v-if="showQuiz">틀린 문제를 선택하고 오답풀이를 시작해보세요. 오답풀이까지 {{ incorrectAnswers.length }} 문제 남았습니다</p>
     </div>
   </div>
 </template>
 
 
 <style>
-.quiz-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
 
-.quiz-progress {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 10px;
-}
+  .spoiler {
+    color: transparent;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+  }
 
-.quiz-answers {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
+  .spoiler:hover {
+    color: inherit;
+    text-shadow: none;
+  }
 
-.quiz-answers li {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 10px;
-  margin-bottom: 10px;
-  cursor: pointer;
-}
+  .quiz-result table {
+    border-collapse: collapse;
+    margin-top: 16px;
+  }
 
-.quiz-answers li.selected {
-  border-color: #007aff;
-}
+  .quiz-result table td,
+  .quiz-result table th {
+    border: 1px solid #ccc;
+    padding: 8px;
+  }
 
-.quiz-result {
-  margin-top: 20px;
-}
+  .quiz-result table th {
+    background-color: #f3f3f3;
+    font-weight: bold;
+    text-align: center;
+  }
 
-.quiz-start {
-  margin-top: 20px;
-}
+  .quiz-result table tr:nth-child(even) {
+    background-color: #f3f3f3;
+  }
 
-.spoiler {
-    background-color: #000;
-    color: #000;
-}
-.spoiler:hover {
+  .quiz-progress {
+    margin-right: 8px;
+  }
+
+  .quiz-answers {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .quiz-answers li {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 8px;
+    padding: 8px;
+    text-align: center;
+  }
+
+  .quiz-answers li:hover {
+    background-color: #f3f3f3;
+  }
+
+  .quiz-answers li.selected {
+    background-color: #4caf50;
     color: #fff;
-}
+  }
+
+  .quiz-header {
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .quiz-start {
+    text-align: center;
+  }
+
+  .quiz-start button,
+  .quiz-result button {
+    background-color: #4caf50;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 12px 24px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background-color 0.2s ease-out;
+  }
+
+  .quiz-start button:hover,
+  .quiz-result button:hover {
+    background-color: #388e3c;
+  }
 </style>
 
 
