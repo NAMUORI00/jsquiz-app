@@ -1,17 +1,52 @@
 [
     {
-      "question": "What is the capital of France?",
-      "answers": ["Paris", "London", "Berlin", "Rome"],
+      "question": "한국에서 가장 높은 산은 무엇인가요?",
+      "answers": ["한라산", "지리산", "설악산", "대둔산"],
       "correct": 0
     },
     {
-      "question": "What is the highest mountain in the world?",
-      "answers": ["Kilimanjaro", "Everest", "Mont Blanc", "Mount Fuji"],
+      "question": "한국의 수도는 어디인가요?",
+      "answers": ["서울", "부산", "대구", "인천"],
+      "correct": 0
+    },
+    {
+      "question": "한국 전통 음식 중 하나인 불고기는 어떤 고기를 사용하나요?",
+      "answers": ["소고기", "돼지고기", "닭고기", "양고기"],
+      "correct": 0
+    },
+    {
+      "question": "한국의 전통 의상인 한복은 어느 시대에 생겨났나요?",
+      "answers": ["조선시대", "고려시대", "신라시대", "백제시대"],
+      "correct": 0
+    },
+    {
+      "question": "한국의 전통 악기 중 하나인 국악당은 어떤 악기인가요?",
+      "answers": ["태평소", "거문고", "종소리", "장구"],
       "correct": 1
     },
     {
-      "question": "What is the largest country in the world by area?",
-      "answers": ["Russia", "China", "USA", "Canada"],
+      "question": "한국의 민속놀이 중 하나인 강강술래는 몇 명이서 하는 놀이인가요?",
+      "answers": ["1명", "2명", "3명", "4명"],
+      "correct": 2
+    },
+    {
+      "question": "한국의 대표적인 축제 중 하나인 부산 국제 영화제는 몇 월에 열리나요?",
+      "answers": ["1월", "7월", "10월", "12월"],
+      "correct": 2
+    },
+    {
+      "question": "한국의 삼국시대에서 발생한 유명한 전쟁 중 하나는 무엇인가요?",
+      "answers": ["안시성 전투", "인천 상륙 작전", "한산 대첩", "평양 전투"],
       "correct": 0
+    },
+    {
+      "question": "한국의 대표적인 문화재 중 하나인 경복궁은 어느 왕조 때 건설되었나요?",
+      "answers": ["조선시대", "고구려시대", "백제시대", "신라시대"],
+      "correct": 0
+    },
+    {
+      "question": "한국의 대표적인 종교 중 하나인 불교에서 사용하는 광장은 어떤 것인가요?",
+      "answers": ["술상", "종교", "사찰", "불상"],
+      "correct": 1
     }
-  ]
+]
