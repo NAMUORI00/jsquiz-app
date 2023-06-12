@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div v-if="showResult" class="quiz-result">
+    <h2>결과 : {{ questions.length }}점 만점에 {{ correctAnswers }}점!</h2>
+    <button @click="restart">다시풀기</button>
+    </div>
+
     <div class="quiz-header">
       <span class="quiz-progress">{{ currentQuestionIndex + 1 }} / {{ questions.length }}</span>
       <h1 v-if="currentQuestion">{{ currentQuestion.question }}</h1>
@@ -14,31 +19,36 @@
         {{ answer }}
       </li>
     </ul>
+
     <div v-if="showResult" class="quiz-result">
-    <h2>You got {{ correctAnswers }} out of {{ questions.length }} questions correct!</h2>
-    <button @click="restart">Restart Quiz</button>
-    <div v-if="incorrectAnswers.length > 0">
-        <h3>Incorrect answers:</h3>
-        <table>
-        <thead>
-            <tr>
-            <th>Question</th>
-            <th>Answer</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="index in incorrectAnswers" :key="index">
-            <td>
-                <button @click="currentQuestionIndex = index">{{ index + 1 }}</button>
-            </td>
-            <td>
-                {{ questions[index].question }}
-            </td>
-            </tr>
-        </tbody>
-        </table>
+        <div v-if="incorrectAnswers.length > 0">
+        <h3>틀린문제:</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>문제번호</th>
+                    <th>문제</th>
+                    <th>정답</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(index, i) in incorrectAnswers" :key="index">
+                    <td>
+                        <button @click="currentQuestionIndex = index">{{ index + 1 }}</button>
+                    </td>
+                    <td>
+                        {{ questions[index].question }}
+                    </td>
+                    <td>
+                        <p class="spoiler">{{ questions[index].correct + 1}}</p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    </div>
+
+
   </div>
 </template>
 
@@ -79,6 +89,15 @@
 .quiz-result {
   margin-top: 20px;
 }
+
+.spoiler {
+    background-color: #000;
+    color: #000;
+}
+.spoiler:hover {
+    color: #fff;
+}
+
 </style>
 
 
@@ -87,16 +106,16 @@ import axios from 'axios';
 
 export default {
   name: 'Quiz',
-  data() {
-    return {
-        questions: [],  
-        currentQuestionIndex: 0,
-        correctAnswers: 0,
-        incorrectAnswers: [],
-        showResult: false,
-        selectedAnswerIndex: null,
-    };
-  },
+    data() {
+        return {
+            questions: [],
+            currentQuestionIndex: 0,
+            correctAnswers: 0,
+            incorrectAnswers: [],
+            showResult: false,
+            selectedAnswerIndex: null,
+        };
+    },
   computed: {
     currentQuestion() {
       return this.questions[this.currentQuestionIndex];
@@ -113,14 +132,18 @@ export default {
     },
     async checkAnswer(index) {
         this.selectedAnswerIndex = index;
-            if (index === this.currentQuestion.correct) {
-            this.correctAnswers++;
-        } else {
+        if (index === this.currentQuestion.correct) {
+            if(!this.showResult){
+                this.correctAnswers++;
+            }
+        } else if (!this.incorrectAnswers.includes(this.currentQuestionIndex)) {
             this.incorrectAnswers.push(this.currentQuestionIndex);
         }
         if (this.currentQuestionIndex < this.questions.length - 1) {
             await this.$nextTick();
-            this.currentQuestionIndex++;
+            if(!this.showResult){
+                this.currentQuestionIndex++;
+            }
             this.selectedAnswerIndex = null;
         } else {
             await this.$nextTick();
@@ -135,6 +158,7 @@ export default {
         this.correctAnswers = 0;
         this.showResult = false;
         this.selectedAnswerIndex = null;
+        this.incorrectAnswers =[];
     },
   },
   created() {
