@@ -163,7 +163,10 @@ export default {
             }
         } else if (!this.incorrectAnswers.includes(this.currentQuestionIndex)) {
             this.incorrectAnswers.push(this.currentQuestionIndex);
-            
+        } else{
+          if(this.showResult){
+                this.$notify({ type: "warn", text: "오답입니다. 다시 풀이해보세요" });
+          }
         }
         if (this.currentQuestionIndex < this.questions.length - 1) {
             await this.$nextTick();
@@ -173,10 +176,7 @@ export default {
             this.selectedAnswerIndex = null;
         } else {
             await this.$nextTick();
-            if(this.showResult){
-                this.$notify({ type: "warn", text: "오답입니다. 다시 풀이해보세요" });
-                this.currentQuestionIndex = this.incorrectAnswers[0];
-            }
+            this.currentQuestionIndex = this.incorrectAnswers[0];
             this.showResult = true;
         }
     },
