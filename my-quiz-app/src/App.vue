@@ -6,6 +6,7 @@ import Quiz from './Quiz.vue'
 <template>
   <div id="app">
     <Quiz />
+    <notifications />
   </div>
 </template>
 
