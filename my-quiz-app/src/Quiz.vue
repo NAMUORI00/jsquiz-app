@@ -16,7 +16,9 @@
     <div v-if="showQuiz && !showTitle">
       <div v-if="!showResult" class="quiz-header">
         <span class="quiz-progress">{{ currentQuestionIndex + 1 }} / {{ questions.length }}</span>
-        <h1 v-if="currentQuestion">{{ currentQuestion.question }}</h1>
+      </div>
+      <div>
+        <h2 v-if="currentQuestion">{{ currentQuestion.question }}</h2>
       </div>
       <ul class="quiz-answers">
         <li
@@ -120,10 +122,6 @@
     background-color: #f3f3f3;
   }
 
-  .quiz-answers li.selected {
-    background-color: #4caf50;
-    color: #fff;
-  }
 
   .quiz-header {
     margin-bottom: 16px;
