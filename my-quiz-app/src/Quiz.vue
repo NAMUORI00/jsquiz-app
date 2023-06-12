@@ -14,7 +14,7 @@
 
     <!-- 퀴즈 화면 -->
     <div v-if="showQuiz && !showTitle">
-      <div class="quiz-header">
+      <div v-if="!showResult" class="quiz-header">
         <span class="quiz-progress">{{ currentQuestionIndex + 1 }} / {{ questions.length }}</span>
         <h1 v-if="currentQuestion">{{ currentQuestion.question }}</h1>
       </div>
@@ -179,10 +179,17 @@ export default {
     },
   },
   methods: {
+    shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    },
     async getQuestions() {
       try {
         const response = await axios.get('/quiz.json');
-        this.questions = response.data;
+        this.questions = this.shuffle(response.data); // 문제 배열을 무작위로 섞음
       } catch (error) {
         console.error(error);
       }
